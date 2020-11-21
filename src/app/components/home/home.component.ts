@@ -16,8 +16,8 @@ totalActive=0;
 totalDeaths=0;
 totalRecovered=0;
 globalData : GlobalDataSummary[];
-pieChart: NewType = {
-  chartType: 'pieChart'
+PieChart: NewType = {
+  chartType: 'PieChart'
 
 }
 
@@ -36,8 +36,8 @@ pieChart: NewType = {
     })
    
     
-    this.pieChart ={
-      chartType:'pieChart',
+    this.PieChart ={
+      chartType:'PieChart',
       dataTable: datatable,
       options: {'Country': 'Cases'},
     }
