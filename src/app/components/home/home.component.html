@@ -6,7 +6,13 @@
     [totalDeaths]='totalDeaths' [totalRecovered]='totalRecovered'></app-dashboard-card>
 </div>
 
-<google-chart [data]="PieChart"></google-chart>
+<hr>
+<div class="row">
+    <div class="col"><google-chart [data]="ColumnChart"></google-chart></div>
+    <div class="col"><google-chart [data]="PieChart"></google-chart></div>
+</div>
+
+
 
 <!-- <google-chart [title]="chart.title" [type]="chart.type" [data]="chart.data" [columns]="chart.columnNames" [options]="chart.options">
 </google-chart> -->

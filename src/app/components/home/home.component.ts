@@ -18,6 +18,9 @@ totalRecovered=0;
 globalData : GlobalDataSummary[];
 PieChart: NewType = {
   chartType: 'PieChart'
+}
+ColumnChart: NewType = {
+  chartType: 'ColumnChart'
 
 }
   constructor(private dataServices : DataServicesService) { }
@@ -27,9 +30,9 @@ PieChart: NewType = {
     let datatable=[];
     datatable.push(["country", "Cases"])
     this.globalData.forEach(cs=>{
-
-      datatable.push([
-        cs.country, cs.confirmed
+      if(cs.confirmed  > 2000)
+         datatable.push([
+         cs.country, cs.confirmed
       ])
     })
    
@@ -37,7 +40,16 @@ PieChart: NewType = {
     this.PieChart ={
       chartType:'PieChart',
       dataTable: datatable,
-      options: {'Country': 'Cases'},
+      options: {
+        height : 500
+      },
+    }
+    this.ColumnChart ={
+      chartType:'ColumnChart',
+      dataTable: datatable,
+      options: {
+        height : 500
+      },
     }
 
 
