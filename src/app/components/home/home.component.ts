@@ -20,9 +20,7 @@ PieChart: NewType = {
   chartType: 'PieChart'
 
 }
-
   constructor(private dataServices : DataServicesService) { }
-
 
   initChart(){
 
