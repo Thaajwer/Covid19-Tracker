@@ -8,7 +8,7 @@ import { GlobalDataSummary } from '../models/global-data';
 })
 export class DataServicesService {
 
-  private globalDataUrl  = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/11-16-2020.csv'
+  private globalDataUrl  = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/11-20-2020.csv'
   constructor(private http : HttpClient) { }
 
      getGlobalData(){

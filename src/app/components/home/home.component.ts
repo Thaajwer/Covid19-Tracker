@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { GoogleChartInterface } from 'ng2-google-charts';
 import { GlobalDataSummary } from 'src/app/models/global-data';
 import { DataServicesService } from 'src/app/services/data-services.service';
@@ -16,6 +16,7 @@ totalActive=0;
 totalDeaths=0;
 totalRecovered=0;
 globalData : GlobalDataSummary[];
+
 PieChart: NewType = {
   chartType: 'PieChart'
 }
@@ -25,17 +26,35 @@ ColumnChart: NewType = {
 }
   constructor(private dataServices : DataServicesService) { }
 
-  initChart(){
+  initChart(caseType: string){
 
     let datatable=[];
     datatable.push(["country", "Cases"])
     this.globalData.forEach(cs=>{
-      if(cs.confirmed  > 2000)
-         datatable.push([
-         cs.country, cs.confirmed
-      ])
+      let value :number;
+      if(caseType == 'c')
+       if(cs.confirmed  > 2000)
+        value =cs.confirmed
+
+      if(caseType == 'd')
+       if(cs.deaths  > 1000)
+        value =cs.deaths
+
+      if(caseType == 'r')
+       if(cs.recovered  > 2000)
+        value =cs.recovered
+    
+
+      if(caseType == 'a')
+       if(cs.active  > 2000)
+         value =cs.active
+     
+        datatable.push([
+          cs.country, value
+        ])
+
     })
-   
+    console.log(datatable)
     
     this.PieChart ={
       chartType:'PieChart',
@@ -43,10 +62,11 @@ ColumnChart: NewType = {
       options: {
         height : 500
       },
-    }
+    };
     this.ColumnChart ={
       chartType:'ColumnChart',
       dataTable: datatable,
+      
       options: {
         height : 500
       },
@@ -72,12 +92,18 @@ ColumnChart: NewType = {
                 }
 
               })
-              this.initChart();
+              this.initChart('c');
             }
 
         }
 
     )
+  }
+
+  updateChart(input : HTMLInputElement){
+    console.log(input.value);
+    this.initChart(input.value);
+    
   }
 
 }
