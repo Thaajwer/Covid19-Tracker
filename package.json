@@ -21,6 +21,7 @@
     "@angular/router": "~11.0.0",
     "angular-google-charts": "^1.1.6",
     "bootstrap": "^4.5.3",
+    "google-charts": "^2.0.0",
     "ng2-google-charts": "^6.1.0",
     "ngx-bootstrap": "^6.2.0",
     "rxjs": "~6.6.0",

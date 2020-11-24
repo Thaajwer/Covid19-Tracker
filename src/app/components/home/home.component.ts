@@ -1,9 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { GoogleChartInterface } from 'ng2-google-charts';
 import { GlobalDataSummary } from 'src/app/models/global-data';
 import { DataServicesService } from 'src/app/services/data-services.service';
 
-type NewType = GoogleChartInterface;
 
 @Component({
   selector: 'app-home',
@@ -17,19 +15,64 @@ totalDeaths=0;
 totalRecovered=0;
 globalData : GlobalDataSummary[];
 
-PieChart: NewType = {
-  chartType: 'PieChart'
-}
-ColumnChart: NewType = {
-  chartType: 'ColumnChart'
-
-}
+datatable = [];
+  chart = {
+    PieChart : "PieChart" ,
+    ColumnChart : 'ColumnChart' ,
+   
+    height: 500, 
+    options: {
+      animation:{
+        duration: 1000,
+        easing: 'out',
+      },
+      is3D: true
+    }  
+  }
+  loading: boolean;
+ 
   constructor(private dataServices : DataServicesService) { }
+
+  ngOnInit(): void {
+
+    this.dataServices.getGlobalData()
+      .subscribe(
+        {
+          next: (result) => {
+            console.log(result);
+            this.globalData = result;
+            result.forEach(cs => {
+              if (!Number.isNaN(cs.confirmed)) {
+                this.totalActive += cs.active
+                this.totalConfirmed += cs.confirmed
+                this.totalDeaths += cs.deaths
+                this.totalRecovered += cs.active
+              }
+
+            })
+
+            this.initChart('c');
+          }, 
+          complete : ()=>{
+            this.loading = false;
+          }
+        }
+      )
+  }
+
+
+
+
+  updateChart(input: HTMLInputElement) {
+    console.log(input.value);
+    this.initChart(input.value)
+  }
 
   initChart(caseType: string){
 
-    let datatable=[];
-    datatable.push(["country", "Cases"])
+    this.datatable=[];
+    //datatable.push(["Country", "Cases"])
+
     this.globalData.forEach(cs=>{
       let value :number;
       if(caseType == 'c')
@@ -49,61 +92,13 @@ ColumnChart: NewType = {
        if(cs.active  > 2000)
          value =cs.active
      
-        datatable.push([
+        this.datatable.push([
           cs.country, value
         ])
 
     })
-    console.log(datatable)
-    
-    this.PieChart ={
-      chartType:'PieChart',
-      dataTable: datatable,
-      options: {
-        height : 500
-      },
-    };
-    this.ColumnChart ={
-      chartType:'ColumnChart',
-      dataTable: datatable,
-      
-      options: {
-        height : 500
-      },
-    }
+    console.log(this.datatable)
 
-
-  }
-  ngOnInit(): void {
-    this.dataServices.getGlobalData()
-    .subscribe(
-        {
-            next: (result)=>{
-              console.log(result);
-              this.globalData=result;
-
-              result.forEach(cs=>{
-                if(!Number.isNaN(cs.confirmed)){
-                  this.totalActive+=cs.active
-                  this.totalConfirmed+=cs.confirmed
-                  this.totalDeaths+=cs.deaths
-                  this.totalRecovered+=cs.recovered
-
-                }
-
-              })
-              this.initChart('c');
-            }
-
-        }
-
-    )
-  }
-
-  updateChart(input : HTMLInputElement){
-    console.log(input.value);
-    this.initChart(input.value);
-    
   }
  
 }

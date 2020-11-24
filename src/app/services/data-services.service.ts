@@ -9,6 +9,9 @@ import { GlobalDataSummary } from '../models/global-data';
 export class DataServicesService {
 
   private globalDataUrl  = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/11-20-2020.csv'
+  
+
+
   constructor(private http : HttpClient) { }
 
      getGlobalData(){
@@ -16,7 +19,6 @@ export class DataServicesService {
       return this.http.get(this.globalDataUrl , {responseType : 'text'}).pipe(
 
         map(result=>{
-          let data : GlobalDataSummary[]=[];
           let raw = {}
           let rows = result.split('\n');
           rows.splice(0, 1);
