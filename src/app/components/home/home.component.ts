@@ -105,5 +105,5 @@ ColumnChart: NewType = {
     this.initChart(input.value);
     
   }
-
+ 
 }
