@@ -28,6 +28,8 @@ export class CountriesComponent implements OnInit {
       easing: 'out',
     },
   }
+
+  
  
   constructor(private service : DataServicesService) { }
 
