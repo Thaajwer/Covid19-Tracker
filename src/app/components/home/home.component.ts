@@ -27,8 +27,7 @@ export class HomeComponent implements OnInit {
       animation:{
         duration: 1000,
         easing: 'out',
-      },
-      
+      },    
     }  
   }
   
